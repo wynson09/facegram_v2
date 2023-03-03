@@ -4,6 +4,7 @@ import Login from "./components/Login";
 import Home from "./container/Home";
 //test
 const App = () => {
+  let userStatus = 'logout'
   return (
     <BrowserRouter>
       <Routes>

@@ -46,7 +46,6 @@ const PinDetail = ({ user }) => {
       client.fetch(query)
         .then((data)=> {
           setPinDetail(data[0]);
-
           if(data[0]) {
             query = pinDetailMorePinQuery(data[0]);
 
@@ -65,19 +64,18 @@ const PinDetail = ({ user }) => {
 
   return (
     <>
-    <div className='flex xl:flex-row flex-col m-auto bg-white shadow-2xl' style={{maxWidth: '1500px', borderRadius: '32px'}}>
-      <div className='flex justify-center items-center md:items-start flex-initial'>
+    <div className='flex xl:flex-row flex-col m-auto bg-white shadow-2xl overflow-hidden' style={{maxWidth: '1500px', borderRadius: '32px'}}>
+      <div className='flex justify-center items-center md:items-start flex-initial bg-gray-200 min-w-[500px]'>
         <img 
           src={pinDetail?.image && urlFor(pinDetail.image).url()}
           alt='Selected-Pin'
-          className='xl:rounded-bl-3xl xl:rounded-tl-3xl maxLg:rounded-t-3xl'
         />
       </div>
       <div className='flex flex-col'>
         <div>
           <div className='w-full p-5 flex flex-row justify-between xl:min-w-[780px]'>
             <Link 
-                  to={`user-profile/${pinDetail.postedBy?._id}`}
+                  to={`/user-profile/${pinDetail.postedBy?._id}`}
                   className='flex gap-2 items-center bg-white rounded-lg'
               >
                   <img 
@@ -104,19 +102,21 @@ const PinDetail = ({ user }) => {
                 rel='noreferrer'
                 className='bg-gray-300 flex items-center gap-2 text-black font-bold p-2 pl-4 pr-4 rounded-full opacity-70 hover:opacity-100 hover:shadow-md'
               >
-                {pinDetail.destination.length > 20 ? pinDetail.destination.slice(8, 20) : pinDetail.destination.slice(8)}
+                {pinDetail.destination.length > 15 ? `${pinDetail.destination.slice(8, 15)}...` : pinDetail.destination}
               </a>
             </div>
           </div>
         </div>
         <div className='ml-4 pr-[20px] mb-[40px]'>
-          <h1 className='text-4xl font-bold break-words'>
+          <h1 className='text-4xl font-bold break-words ml-5'>
             {pinDetail.title}
           </h1>
-          <p className='mt-3'>{pinDetail.about}</p>
-          <h2 className='mt-5 text-2xl'>Comments</h2>
+          <p className='mt-3 mb-3 ml-5'>{pinDetail.about}</p>
+          <hr/>
+          <h2 className='my-1 text-2xl text-center'>Comments</h2>
+          <hr/>
           <div className='max-h-370 overflow-y-auto'>
-            {pinDetail?.comments?.map((comment, i) =>(
+            {pinDetail?.comments?.map((comment, i) =>( 
               <div className='flex gap-2 mt-5 items-center bg-white rounded-lg' key={i}>
                 <img
                   src={comment.postedBy.image}

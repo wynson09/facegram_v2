@@ -27,6 +27,7 @@ const Login = () => {
     client.createIfNotExists(doc)
       .then(() =>{
         navigate('/', {replace: true})
+        
       })
   }
 

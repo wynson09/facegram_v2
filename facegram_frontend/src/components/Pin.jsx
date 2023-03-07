@@ -3,22 +3,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4} from 'uuid';
 import { urlFor, client } from '../client';
 import { MdDownloadForOffline } from 'react-icons/md';
-import { AiTwotoneDelete } from 'react-icons/ai';
 import { BsArrowUpRightCircleFill } from 'react-icons/bs';
 import { fetchUser } from '../utils/fetchUser';
-
-const Pin = ({pin: { postedBy, image, _id, destination, save}}) => {
+const Pin = ({pin: { postedBy, image, _id, destination, save}, feedController}) => {
 
     const [postHovered, setPostHovered] = useState(false); 
+    const [userSaveLength, setUserSaveLength] = useState(save?.length);
     const navigate = useNavigate();
     const user = fetchUser();
-
-    
-    const alreadySaved = !!(save?.filter((item)=> item.postedBy._id === user.sub))?.length;
+    const [pinSave, setPinSave] = useState(!!(save?.filter((item)=> item.postedBy?._id === user.sub))?.length);
     
 
     const savePin = (id) => {
-        if(!alreadySaved){
+        if(!pinSave){
 
             client
                 .patch(id)
@@ -32,18 +29,18 @@ const Pin = ({pin: { postedBy, image, _id, destination, save}}) => {
                     }
                 }])
                 .commit()
-                .then(()=>{
-                    window.location.reload();
+                .then(async (data) =>{
+                    data.save.forEach((savePin) =>{     
+                    if(savePin.userId === user.sub){
+                        feedController(true);
+                        setPinSave(true);
+                        setUserSaveLength(data.save.length);
+                      }
+                    })
+                    
+                   
                 })
         }
-    }
-
-    const deletePin = (id) => {
-        client
-            .delete(id)
-            .then(()=>{
-                window.location.reload();
-            })
     }
 
   return (
@@ -71,12 +68,12 @@ const Pin = ({pin: { postedBy, image, _id, destination, save}}) => {
                                 <MdDownloadForOffline />
                             </a>
                         </div>
-                        {alreadySaved? (
+                        {pinSave? (
                             <button 
                                 type='button' 
                                 className='bg-[#33ccff] opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none'
                             >
-                               {save?.length} Saved
+                               {userSaveLength} Saved
                             </button>
                         ): (
                             <button 
@@ -101,18 +98,6 @@ const Pin = ({pin: { postedBy, image, _id, destination, save}}) => {
                                 <BsArrowUpRightCircleFill />
                                 {destination.length > 15 ? `${destination.slice(8, 15)}...` : destination}
                             </a>
-                        )}
-                        {postedBy?._id === user.sub && (
-                            <button
-                                type='button'
-                                onClick={(e)=> {
-                                    e.stopPropagation();
-                                    deletePin(_id);
-                                }}
-                                className='bg-white flex items-center text-black font-bold p-2 rounded-full opacity-70 hover:opacity-100 hover:shadow-md'
-                            >
-                                <AiTwotoneDelete />
-                            </button>
                         )}
                     </div>
                 </div>

@@ -21,6 +21,7 @@ const Search = ({ searchTerm }) => {
         })
 
     }else {
+      //error because you change the feedquery in data.js
       client.fetch(feedQuery)
         .then((data) => {
           setPins(data);

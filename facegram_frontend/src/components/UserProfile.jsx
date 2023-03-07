@@ -57,12 +57,17 @@ const UserProfile = ({ USER }) => {
   
   
   useEffect(() => {
-    const query = userQuery(userId);
-    client.fetch(query)
-      .then((data) => {
-        setUser(data[0]);
-      })
-  }, [userId])
+    if(localStorage.userStatus === 'true'){
+      const query = userQuery(userId);
+      client.fetch(query)
+        .then((data) => {
+          setUser(data[0]);
+        })
+    }else {
+      navigate('/login');
+    }
+    
+  }, [userId, navigate])
   
 
   if(!user){
@@ -142,6 +147,7 @@ const UserProfile = ({ USER }) => {
                 <button
                   type='button'
                   onClick={()=> {
+                    localStorage.userStatus = false;
                     navigate('/login') ;
                     setUser({});
                   }}

@@ -1,3 +1,5 @@
+
+
 export const categories = [
     {
       name: 'cars',
@@ -49,8 +51,9 @@ export const categories = [
       image: 'https://i.pinimg.com/236x/2e/63/c8/2e63c82dfd49aca8dccf9de3f57e8588.jpg',
     },
   ];
+
   
-  export const feedQuery = `*[_type == "pin"] | order(_createdAt desc) {
+  export const feedQuery =`*[_type == "pin"] | order(_createdAt desc) {
     image{
       asset->{
         url
@@ -72,6 +75,7 @@ export const categories = [
           },
         },
       } `;
+  
   
   export const pinDetailQuery = (pinId) => {
     const query = `*[_type == "pin" && _id == '${pinId}']{

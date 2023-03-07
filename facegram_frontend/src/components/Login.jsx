@@ -26,6 +26,7 @@ const Login = () => {
     }
     client.createIfNotExists(doc)
       .then(() =>{
+        localStorage.userStatus = true;
         navigate('/', {replace: true})
         
       })

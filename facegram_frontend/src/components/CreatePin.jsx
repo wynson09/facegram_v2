@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
@@ -64,6 +64,7 @@ const CreatePin = ({user}) => {
 
       client.create(doc)
         .then(() => {
+          localStorage.feedStatus = true;
           navigate('/');
         })
     }else {
@@ -72,6 +73,13 @@ const CreatePin = ({user}) => {
       setTimeout(() => setFields(false), 2000)
     }
   }
+
+  useEffect(() => {
+    if(localStorage.userStatus === 'false'){
+      navigate('/login');
+    }
+  }, [navigate],[])
+  
 
   return (
     <div className='flex flex-col justify-center items-center mt-5 lg:h-4/5'>

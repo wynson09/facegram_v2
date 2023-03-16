@@ -31,7 +31,6 @@ const PinDetail = ({ user }) => {
   }
 
   const savePin = (id) => {
-    console.log(pinSave);
     if(!pinSave){
 
         client

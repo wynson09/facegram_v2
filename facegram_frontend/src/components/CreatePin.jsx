@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { client } from '../client';
 import Spinner from './Spinner';
 import { categories } from '../utils/data';
+import { v4 as uuidv4} from 'uuid';
 
 const CreatePin = ({user}) => {
   
@@ -54,6 +55,7 @@ const CreatePin = ({user}) => {
             _ref: imageAsset?._id
           }
         },
+        _key: uuidv4(),
         userId: user._id,
         postedBy: {
           _type: 'postedBy',
@@ -150,14 +152,14 @@ const CreatePin = ({user}) => {
                 type='text'
                 value={about}
                 onChange={(e) => setAbout(e.target.value)}
-                placeholder='What is your pin'
+                placeholder='Add description'
                 className='outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2'
               />
               <input 
-                type='text'
+                type='url'
                 value={destination}
                 onChange={(e) => setDestination(e.target.value)}
-                placeholder='Add a destination link'
+                placeholder='Add a description link / url'
                 className='outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2'
               />
               <div className='flex flex-col'>

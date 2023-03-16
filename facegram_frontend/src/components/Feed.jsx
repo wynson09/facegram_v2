@@ -22,18 +22,6 @@ const Feed = () => {
   
   }, [feed])
 
-  const feedController = (status) => {
-    console.log(status)
-    if(status){
-      setLoading(true);
-      client.fetch(feedQuery)
-       .then((data) =>{
-          setPins(data);
-         setLoading(false);
-            status = false;
-        })
-    } 
-  }
 
   async function feedRequest (query) {
     try {
@@ -45,7 +33,6 @@ const Feed = () => {
     } catch (error) {
       console.log(error);
     }
-
   }
   
   useEffect(() => {
@@ -55,7 +42,6 @@ const Feed = () => {
       if(categoryId){ 
         feedRequest(query);
       }else {
-        console.log(`update`);
         feedRequest(feedQuery);
 
       }
@@ -70,7 +56,7 @@ const Feed = () => {
 
   return (
     <div>
-      {pins && <MasonryLayout pins={pins} feedController={feedController} />}
+      {pins && <MasonryLayout pins={pins} />}
     </div>
   )
 }

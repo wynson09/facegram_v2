@@ -5,7 +5,7 @@ import { urlFor, client } from '../client';
 import { MdDownloadForOffline } from 'react-icons/md';
 import { BsArrowUpRightCircleFill } from 'react-icons/bs';
 import { fetchUser } from '../utils/fetchUser';
-const Pin = ({pin: { postedBy, image, _id, destination, save}, feedController}) => {
+const Pin = ({pin: { postedBy, image, _id, destination, save}}) => {
 
     const [postHovered, setPostHovered] = useState(false); 
     const [userSaveLength, setUserSaveLength] = useState(save?.length);
@@ -32,7 +32,6 @@ const Pin = ({pin: { postedBy, image, _id, destination, save}, feedController}) 
                 .then(async (data) =>{
                     data.save.forEach((savePin) =>{     
                     if(savePin.userId === user.sub){
-                        feedController(true);
                         setPinSave(true);
                         setUserSaveLength(data.save.length);
                       }
@@ -91,6 +90,9 @@ const Pin = ({pin: { postedBy, image, _id, destination, save}, feedController}) 
                         {destination && (
                             <a
                                 href={destination}
+                                onClick={(e)=> {
+                                    e.stopPropagation();
+                                }}
                                 target='_blank'
                                 rel='noreferrer'
                                 className='bg-white flex items-center gap-2 text-black font-bold p-2 pl-4 pr-4 rounded-full opacity-70 hover:opacity-100 hover:shadow-md'

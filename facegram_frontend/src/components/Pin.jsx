@@ -11,7 +11,7 @@ const Pin = ({pin: { postedBy, image, _id, destination, save}}) => {
     const [userSaveLength, setUserSaveLength] = useState(save?.length);
     const navigate = useNavigate();
     const user = fetchUser();
-    const [pinSave, setPinSave] = useState(!!(save?.filter((item)=> item.postedBy?._id === user.sub))?.length);
+    const [pinSave, setPinSave] = useState(!!(save?.filter((item)=> item?.postedBy?._id === user?.sub))?.length);
     
 
     const savePin = (id) => {
@@ -31,7 +31,7 @@ const Pin = ({pin: { postedBy, image, _id, destination, save}}) => {
                 .commit()
                 .then(async (data) =>{
                     data.save.forEach((savePin) =>{     
-                    if(savePin.userId === user.sub){
+                    if(savePin.userId === user?.sub){
                         setPinSave(true);
                         setUserSaveLength(data.save.length);
                       }

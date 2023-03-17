@@ -94,7 +94,7 @@ const UserProfile = ({ USER }) => {
               {user.userName}
             </h1>
             <div className='absolute top-[10px] z-1 right-[10px]'>
-              {userId === USER._id && (
+              {userId === USER?._id && (
                 <button
                   onClick={() => handleSignOut()}
                   className='bg-white p-2 rounded-full cursor-pointer outline-none shadow-md'
